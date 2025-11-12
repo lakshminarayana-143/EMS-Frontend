@@ -17,7 +17,7 @@ const AdminSignup = () => {
     setError(null);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/admin/register", {
+      const res = await axios.post("https://ems-backend-7dly.onrender.com/api/admin/register", {
         email,
         password,
       });

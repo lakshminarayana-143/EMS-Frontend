@@ -10,7 +10,7 @@ export default function ProtectedSignupRoute({ children }) {
     const verifyAccess = async () => {
       try {
         // 1️⃣ Check if any admin exists
-        const checkAdmin = await axios.get("http://localhost:5000/api/admin/check-admin", {
+        const checkAdmin = await axios.get("https://ems-backend-7dly.onrender.com/api/admin/check-admin", {
           withCredentials: true,
         });
 
@@ -22,7 +22,7 @@ export default function ProtectedSignupRoute({ children }) {
         }
 
         // 2️⃣ Admin exists → require access token
-        const res = await axios.get("http://localhost:5000/api/admin/check-access", {
+        const res = await axios.get("https://ems-backend-7dly.onrender.com/api/admin/check-access", {
           withCredentials: true,
         });
 

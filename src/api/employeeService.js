@@ -1,7 +1,7 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const API_URL = "http://localhost:5000/api/employees";
+const API_URL = "https://ems-backend-7dly.onrender.com/api/employees";
 
 export const getEmployees = async () => {
   const res = await axios.get(API_URL);

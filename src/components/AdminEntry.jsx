@@ -9,7 +9,7 @@ export default function AdminEntry() {
   useEffect(() => {
     const checkAdmin = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/check-admin", {
+        const res = await axios.get("https://ems-backend-7dly.onrender.com/api/admin/check-admin", {
           withCredentials: true,
         });
 

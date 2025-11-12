@@ -9,7 +9,7 @@ export default function Header({ onAdd }) {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/admin/logout", {}, { withCredentials: true });
+      await axios.post("https://ems-backend-7dly.onrender.com/api/admin/logout", {}, { withCredentials: true });
       
       navigate("/admin/login");
     } catch (error) {

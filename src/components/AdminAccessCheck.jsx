@@ -14,7 +14,7 @@ const AdminAccessCheck = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/admin/check-password", {
+      const res = await axios.post("https://ems-backend-7dly.onrender.com/api/admin/check-password", {
         accessPassword,
       });
 
