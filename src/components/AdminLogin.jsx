@@ -88,7 +88,7 @@ export default function AdminLogin() {
         {/* 👇 Simple Sign Up Button */}
         <div className="text-center mt-6">
           <button
-            onClick={() => navigate("/admin/access-check")}
+            onClick={() => navigate("/admin/register")}
             className="text-indigo-600 text-sm font-medium underline hover:text-indigo-800 cursor-pointer"
           >
             Admin Sign Up

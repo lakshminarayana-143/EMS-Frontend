@@ -1,33 +1,20 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLogin from "./components/AdminLogin";
-import ProtectedRoute from "./components/ProtectedRoute";
 import EmployeeManagement from "./pages/EmployeeMangement";
 import AdminSignup from "./components/AdminSignup";
-import AdminAccessCheck from "./components/AdminAccessCheck";
-import ProtectedSignupRoute from "./components/ProtectedSignupRoute";
-import AdminEntry from "./components/AdminEntry";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Routes>
-      {/* 🚀 Entry point now decides login vs signup */}
-      <Route path="/" element={<AdminEntry />} />
+      {/* Default route */}
+      <Route path="/" element={<Navigate to="/admin/login" replace />} />
 
-      {/* Login and Access check */}
+      {/* Public routes */}
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/access-check" element={<AdminAccessCheck />} />
+      <Route path="/admin/register" element={<AdminSignup />} />
 
-      {/* Signup */}
-      <Route
-        path="/admin/register"
-        element={
-          <ProtectedSignupRoute>
-            <AdminSignup />
-          </ProtectedSignupRoute>
-        }
-      />
-
-      {/* Protected employee dashboard */}
+      {/* Protected route */}
       <Route element={<ProtectedRoute />}>
         <Route path="/admin/employees" element={<EmployeeManagement />} />
       </Route>

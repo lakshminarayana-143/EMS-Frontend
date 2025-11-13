@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   getEmployees,
   addEmployee,
@@ -13,6 +14,7 @@ import EmployeeModal from "../components/EmployeeModal";
 
 export default function EmployeeManagement() {
   const [employees, setEmployees] = useState([]);
+  const [adminId, setAdminId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
@@ -36,12 +38,28 @@ export default function EmployeeManagement() {
   ];
 
   useEffect(() => {
-    loadEmployees();
+    fetchAdmin();
   }, []);
+
+  const fetchAdmin = async () => {
+    try {
+      const res = await axios.get(
+        "https://ems-backend-7dly.onrender.com/api/admin/check-auth",
+        { withCredentials: true }
+      );
+      setAdminId(res.data.admin.id);
+    } catch (err) {
+      console.error("Failed to fetch admin:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (adminId) loadEmployees();
+  }, [adminId]);
 
   const loadEmployees = async () => {
     try {
-      const data = await getEmployees();
+      const data = await getEmployees(adminId);
       setEmployees(data);
     } catch (error) {
       console.error("Failed to load employees:", error);
@@ -72,7 +90,7 @@ export default function EmployeeManagement() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       try {
-        await deleteEmployee(id);
+        await deleteEmployee(adminId, id);
         setEmployees((prev) => prev.filter((e) => e._id !== id));
       } catch (error) {
         console.error("Failed to delete employee:", error);
@@ -80,7 +98,6 @@ export default function EmployeeManagement() {
     }
   };
 
-  // ✅ Validate form fields before submit
   const validateForm = () => {
     const newErrors = {};
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -108,16 +125,16 @@ export default function EmployeeManagement() {
   };
 
   const handleSubmit = async () => {
-    if (!validateForm()) return; // stop if invalid
+    if (!validateForm()) return;
 
     try {
       if (editingEmployee) {
-        const updated = await updateEmployee(editingEmployee._id, formData);
+        const updated = await updateEmployee(adminId, editingEmployee._id, formData);
         setEmployees((prev) =>
           prev.map((e) => (e._id === updated._id ? updated : e))
         );
       } else {
-        const newEmp = await addEmployee(formData);
+        const newEmp = await addEmployee(adminId, formData);
         setEmployees((prev) => [...prev, newEmp]);
       }
       setShowModal(false);
@@ -166,7 +183,7 @@ export default function EmployeeManagement() {
           onSubmit={handleSubmit}
           editingEmployee={editingEmployee}
           departments={departments}
-          errors={errors} // 👈 pass validation errors to modal
+          errors={errors}
         />
       </div>
     </div>
