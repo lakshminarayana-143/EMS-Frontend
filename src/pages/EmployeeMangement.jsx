@@ -44,7 +44,7 @@ export default function EmployeeManagement() {
   const fetchAdmin = async () => {
     try {
       const res = await axios.get(
-        "https://ems-backend-7dly.onrender.com/api/admin/check-auth",
+        "https://ems-backend-7.onrender.com/api/admin/check-auth",
         { withCredentials: true }
       );
       setAdminId(res.data.admin.id);
