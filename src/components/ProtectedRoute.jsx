@@ -9,7 +9,7 @@ export default function ProtectedRoute() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get("https://ems-backend-7dly.onrender.com/api/admin/check-auth", {
+        await axios.get("https://ems-backend-5.onrender.com/api/admin/check-auth", {
           withCredentials: true,
         });
         setIsAuth(true);
