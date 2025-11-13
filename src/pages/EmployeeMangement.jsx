@@ -14,7 +14,6 @@ import EmployeeModal from "../components/EmployeeModal";
 
 export default function EmployeeManagement() {
   const [employees, setEmployees] = useState([]);
-  const [adminId, setAdminId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
@@ -38,28 +37,12 @@ export default function EmployeeManagement() {
   ];
 
   useEffect(() => {
-    fetchAdmin();
+    loadEmployees();
   }, []);
-
-  const fetchAdmin = async () => {
-    try {
-      const res = await axios.get(
-        "https://ems-backend-7.onrender.com/api/admin/check-auth",
-        { withCredentials: true }
-      );
-      setAdminId(res.data.admin.id);
-    } catch (err) {
-      console.error("Failed to fetch admin:", err);
-    }
-  };
-
-  useEffect(() => {
-    if (adminId) loadEmployees();
-  }, [adminId]);
 
   const loadEmployees = async () => {
     try {
-      const data = await getEmployees(adminId);
+      const data = await getEmployees(); // ✅ no adminId needed
       setEmployees(data);
     } catch (error) {
       console.error("Failed to load employees:", error);
@@ -90,7 +73,7 @@ export default function EmployeeManagement() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       try {
-        await deleteEmployee(adminId, id);
+        await deleteEmployee(id); // ✅ fixed
         setEmployees((prev) => prev.filter((e) => e._id !== id));
       } catch (error) {
         console.error("Failed to delete employee:", error);
@@ -129,12 +112,12 @@ export default function EmployeeManagement() {
 
     try {
       if (editingEmployee) {
-        const updated = await updateEmployee(adminId, editingEmployee._id, formData);
+        const updated = await updateEmployee(editingEmployee._id, formData); // fixed
         setEmployees((prev) =>
           prev.map((e) => (e._id === updated._id ? updated : e))
         );
       } else {
-        const newEmp = await addEmployee(adminId, formData);
+        const newEmp = await addEmployee(formData); // fixed
         setEmployees((prev) => [...prev, newEmp]);
       }
       setShowModal(false);

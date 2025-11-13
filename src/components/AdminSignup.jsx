@@ -17,10 +17,11 @@ const AdminSignup = () => {
     setError(null);
 
     try {
-      const res = await axios.post("https://ems-backend-7.onrender.com/api/admin/register", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "https://ems-backend-7.onrender.com/api/admin/register",
+        { email, password },
+        { withCredentials: true } 
+      );
 
       setMessage(res.data.message || "Signup successful!");
       setEmail("");
@@ -28,7 +29,8 @@ const AdminSignup = () => {
       navigate("/admin/login");
     } catch (err) {
       setError(
-        err.response?.data?.message || "Something went wrong. Please try again."
+        err.response?.data?.message ||
+          "Something went wrong. Please try again."
       );
     } finally {
       setLoading(false);
@@ -86,7 +88,6 @@ const AdminSignup = () => {
           <p className="text-red-600 text-center mt-4 font-medium">{error}</p>
         )}
 
-        {/* 👇 Login button if admin already has an account */}
         <div className="text-center mt-6">
           <button
             type="button"
