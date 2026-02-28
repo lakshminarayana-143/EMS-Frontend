@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-const API_URL = "https://ems-backend-7.onrender.com/api/employees";
+const API_URL = "https://ems-backend-4.onrender.com/api/employees";
 
 // ------------------------------
 // GET EMPLOYEES

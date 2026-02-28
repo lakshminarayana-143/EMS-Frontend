@@ -18,7 +18,7 @@ const AdminSignup = () => {
 
     try {
       const res = await axios.post(
-        "https://ems-backend-7.onrender.com/api/admin/register",
+        "https://ems-backend-4.onrender.com/api/admin/register",
         { email, password },
         { withCredentials: true } 
       );
