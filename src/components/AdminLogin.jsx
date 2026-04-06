@@ -13,7 +13,7 @@ export default function AdminLogin() {
 
     try {
       const res = await axios.post(
-        "https://employee-management-system-7bz0.onrender.com/api/admin/login",
+        "http://localhost:5000/api/admin/login",
         { email, password },
         {
           withCredentials: true,
